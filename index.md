@@ -152,6 +152,7 @@ questions -- we are happy to help!
 [IR]: https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/docs/ir.md
 [wasmtime-docs]: https://docs.wasmtime.dev/
 [isle]: https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/isle/docs/language-reference.md
+[Zulip chat instance]: https://bytecodealliance.zulipchat.com/
 
 ## Contributing
 
