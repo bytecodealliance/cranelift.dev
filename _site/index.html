@@ -115,10 +115,10 @@ complexity wherever possible. It is not a linear-time single-pass compiler,
 but it is still suitable for compiling untrusted code (for example, Wasm
 modules). We fuzz while monitoring for out-of-memory and timeout conditions
 in compilation to verify this.</p>
-<p>Cranelift follows the <a href="https://bytecodealliance.org/security">Bytecode Alliance security policy</a>.
-We have had two sandbox-escape-capable miscompilation CVEs in Cranelift's
-7-year history. We welcome responsible disclosure of vulnerabilities and we
-follow best practices in disseminating notices and patches.</p>
+<p>Cranelift follows the <a href="https://bytecodealliance.org/security">Bytecode Alliance security policy</a>.  We have had two sandbox-escape-capable miscompilation CVEs
+since Cranelift development began in 2016. We welcome responsible
+disclosure of vulnerabilities and we follow best practices in
+disseminating notices and patches.</p>
 </li>
 <li>
 <p><strong>Relatively simple</strong>: Cranelift is an optimizing compiler, but it aims to
@@ -135,7 +135,7 @@ understand how it works.</p>
 <p><strong>Innovative</strong>: In order to compete as a viable alternative to larger
 compilers, and in order to maximize correctness and security in particular,
 Cranelift is open to innovative approaches, and aims to be an actively
-welcoming home to research collaborations. We are (to our knoweldge) the
+welcoming home to research collaborations. We are (to our knowledge) the
 first production compiler to use <a href="https://github.com/bytecodealliance/rfcs/pull/27">e-graphs</a> to build a unified optimization
 framework. We have developed new fuzzing techniques, such as a
 <a href="https://www.jacarte.me/assets/pdf/wasm_mutate.pdf">semantics-preserving fuzzing mutator</a> and a <a href="https://cfallin.org/blog/2021/03/15/cranelift-isel-3/">symbolic translation
@@ -159,8 +159,7 @@ verify</a> parts of the compiler.</p>
 such as its <a href="https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/docs/ir.md">intermediate representation</a>, CLIF. Many of the <a href="https://docs.wasmtime.dev/">Wasmtime
 documents</a> are also applicable: Cranelift is developed in-tree
 in Wasmtime and generally follows its development, testing and release
-processes, for example. The <a href="https://bytecodealliance.github.io/wasmtime/contributing.html">contributing</a> documentation may be especially
-useful.</p>
+processes, for example.</p>
 <p>For users of Cranelift, the API documentation for the main crate
 <a href="https://docs.rs/cranelift-codegen"><code>cranelift-codegen</code></a> and its auxiliary
 helpers for IR producers and Wasm-centric embedders,
@@ -170,6 +169,20 @@ to reference. Developers of Cranelift backends will find the above API
 references useful, as well as the <a href="https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/isle/docs/language-reference.md">ISLE DSL reference</a>.</p>
 <p>Finally, please do feel free to stop by our [Zulip chat instance] and ask
 questions -- we are happy to help!</p>
+<h2>Contributing</h2>
+<p>We welcome anyone who wishes to help develop Cranelift to join our
+community and talk with us! The <a href="https://bytecodealliance.github.io/wasmtime/contributing.html">contributing</a> documentation page from
+Wasmtime offers many tips that apply equally to Cranelift, as a
+project hosted in the same repository with a largely overlapping
+community. In particular, under the
+<a href="https://docs.wasmtime.dev/contributing.html#mentoring">mentoring</a>
+heading on that documentation page, you can find links to &quot;easy first
+issues&quot;. Finally, we hold a <a href="https://github.com/bytecodealliance/meetings/tree/main/cranelift">weekly
+meeting</a>
+in which we discuss current development topics and ideas and usually
+make a round of status updates. Joining this meeting may be a good way
+to learn more about what we're working on (you don't have to speak!)
+and anyone who wishes may join.</p>
 </div>
 </section>
 
