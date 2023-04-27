@@ -61,7 +61,6 @@ section pre {
 <section class="section-hero">
 <div class="container w-container">
 <h1>Cranelift</h1>
-<h2>An optimizing compiler backend</h2>
 <p>A <a href="https://bytecodealliance.org/">Bytecode Alliance</a> project</p>
 <p>Cranelift is a <em>fast</em>, <em>secure</em>, <em>relatively simple</em> and <em>innovative</em> compiler
 backend. It takes an <a href="https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/docs/ir.md">intermediate representation</a> of a program generated
@@ -69,7 +68,7 @@ by some frontend and compiles it to executable machine code. Cranelift is meant
 to be used as a library within an &quot;embedder&quot;. It is in successful use by the
 <a href="https://github.com/bytecodealliance/wasmtime">Wasmtime</a> WebAssembly virtual machine, for just-in-time (JIT) and
 ahead-of-time (AOT) compilation, and also as an <a href="https://github.com/bjorn3/rustc_codegen_cranelift">experimental backend</a>
-for the [Rust] compiler. Its most common use is as a WebAssembly compiler, but
+for the <a href="https://www.rust-lang.org/">Rust</a> compiler. Its most common use is as a WebAssembly compiler, but
 it is fully general and usable for most code-generation needs. Cranelift itself
 is written in Rust.</p>
 <p>Cranelift currently supports x86-64, aarch64 (ARM64), s390x (IBM Z), and
@@ -79,7 +78,7 @@ are welcome.</p>
 untrusted code with close-to-native performance. We continue to develop it to
 add feature support, improve performance, and further verify its correctness.
 We follow <a href="https://github.com/bytecodealliance/wasmtime">Wasmtime</a>'s <a href="https://docs.wasmtime.dev/stability-release.html">release policy</a> and <a href="https://bytecodealliance.org/security">security policy</a>.</p>
-<h3>Attributes</h3>
+<h2>Attributes</h2>
 <ul>
 <li>
 <p><strong>Fast</strong>: Cranelift is developed with the speed of the compiler itself in
@@ -89,7 +88,7 @@ code-generation process about an order of magnitude faster than an equivalent
 LLVM-based system.</p>
 <p>Cranelift aims to generate fast-enough code, as well. While it does not have
 the aggressive optimization stance (or complexity) of larger compilers such
-as [LLVM] or [gcc], its output is often not too far off: the <a href="https://arxiv.org/abs/2011.13127">same
+as <a href="https://llvm.org/">LLVM</a> or <a href="https://gcc.gnu.org/">gcc</a>, its output is often not too far off: the <a href="https://arxiv.org/abs/2011.13127">same
 paper</a> showed Cranelift generating code
 that ran ~2% slower than V8 (TurboFan) and ~14% slower than an LLVM-based
 system.</p>
@@ -162,7 +161,7 @@ documents</a> are also applicable: Cranelift is developed in-tree
 in Wasmtime and generally follows its development, testing and release
 processes, for example. The <a href="https://bytecodealliance.github.io/wasmtime/contributing.html">contributing</a> documentation may be especially
 useful.</p>
-<p>For users of Cranelift, the [API] documentation for the main crate
+<p>For users of Cranelift, the API documentation for the main crate
 <a href="https://docs.rs/cranelift-codegen"><code>cranelift-codegen</code></a> and its auxiliary
 helpers for IR producers and Wasm-centric embedders,
 <a href="https://docs.rs/cranelift-frontend"><code>cranelift-frontend</code></a> and
