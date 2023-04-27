@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Cranelift</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/webflow.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:regular,italic,500,500italic" media="all">
+
+    <link rel="canonical" href="/">
+  </head>
+  <body>
+    <nav id="site-nav">
+      <a href="https://bytecodealliance.org/" class="brand">
+        <img src="assets/images/bytecode-alliance-logo.svg" alt="Bytecode Alliance logo" width="164">
+      </a>
+      <div id="nav-entries" class="container w-container">
+        <ul role="navigation">
+          <li>
+            <a class="page-link" href="https://github.com/bytecodealliance/wasmtime/tree/main/cranelift/docs/">
+              Documentation
+            </a>
+          </li>
+          <li>
+              <a class="page-link" href="https://docs.rs/cranelift-codegen/">
+              API Reference
+            </a>
+          </li>
+          <li>
+            <a href="https://docs.wasmtime.dev/contributing.html">
+              Contributing
+            </a>
+          </li>
+          <li>
+              <a href="https://bytecodealliance.zulipchat.com/#narrow/stream/217117-cranelift">
+              Chat
+            </a>
+          </li>
+          <li class="github-link">
+            <a href="https://github.com/bytecodealliance/wasmtime/tree/main/cranelift" title="GitHub">
+              <svg height="29" viewBox="0 0 16 16" version="1.1" width="25" aria-hidden="true"><path fill="#C2D5E0" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <main class="page-content">
+      <div class="wrapper">
+        <style>
+section pre {
+  padding: 1em;
+}
+</style>
+<section class="section-hero">
+<div class="container w-container">
+<h1>Cranelift</h1>
+<h2>An optimizing compiler backend</h2>
+<p>A <a href="https://bytecodealliance.org/">Bytecode Alliance</a> project</p>
+<p>Cranelift is a <em>fast</em>, <em>secure</em>, <em>relatively simple</em> and <em>innovative</em> compiler
+backend. It takes an <a href="https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/docs/ir.md">intermediate representation</a> of a program generated
+by some frontend and compiles it to executable machine code. Cranelift is meant
+to be used as a library within an &quot;embedder&quot;. It is in successful use by the
+<a href="https://github.com/bytecodealliance/wasmtime">Wasmtime</a> WebAssembly virtual machine, for just-in-time (JIT) and
+ahead-of-time (AOT) compilation, and also as an <a href="https://github.com/bjorn3/rustc_codegen_cranelift">experimental backend</a>
+for the [Rust] compiler. Its most common use is as a WebAssembly compiler, but
+it is fully general and usable for most code-generation needs. Cranelift itself
+is written in Rust.</p>
+<p>Cranelift currently supports x86-64, aarch64 (ARM64), s390x (IBM Z), and
+riscv64 platforms. It is retargetable and contributions of further ISA support
+are welcome.</p>
+<p>Cranelift is actively maintained and used in production to run sandboxed
+untrusted code with close-to-native performance. We continue to develop it to
+add feature support, improve performance, and further verify its correctness.
+We follow <a href="https://github.com/bytecodealliance/wasmtime">Wasmtime</a>'s <a href="https://docs.wasmtime.dev/stability-release.html">release policy</a> and <a href="https://bytecodealliance.org/security">security policy</a>.</p>
+<h3>Attributes</h3>
+<ul>
+<li>
+<p><strong>Fast</strong>: Cranelift is developed with the speed of the compiler itself in
+mind. We aim for Cranelift to be usable as a just-in-time (JIT) compiler. It
+has been <a href="https://arxiv.org/abs/2011.13127">measured</a> to perform the
+code-generation process about an order of magnitude faster than an equivalent
+LLVM-based system.</p>
+<p>Cranelift aims to generate fast-enough code, as well. While it does not have
+the aggressive optimization stance (or complexity) of larger compilers such
+as [LLVM] or [gcc], its output is often not too far off: the <a href="https://arxiv.org/abs/2011.13127">same
+paper</a> showed Cranelift generating code
+that ran ~2% slower than V8 (TurboFan) and ~14% slower than an LLVM-based
+system.</p>
+</li>
+<li>
+<p><strong>Secure</strong>: Cranelift has a strong focus on correctness and verification. In
+addition to developing the compiler itself in a memory-safe language (Rust),
+we continually work to test and verify the compiler in new ways with
+<a href="https://bytecodealliance.org/articles/1-year-update#improving-testing-with-fuzzing">fuzzing</a>, <a href="https://cfallin.org/blog/2021/03/15/cranelift-isel-3/">symbolic translation validation</a> of some stages, correctness
+proofs for critical pieces where appropriate, and more recently, static
+<a href="https://www.cs.cornell.edu/~avh/veri-isle-preprint.pdf">formal verification</a> as well.  We have designed the compiler with
+abstractions to prevent bugs and enforce invariants wherever possible. We
+consciously navigate complexity tradeoffs and choose to avoid some riskier
+and more error-prone optimization techniques. For example, unlike most
+optimizing compilers, our IR does not have undefined behavior, by design.
+Finally, we keep up to date with mitigation techniques, both for side-channel
+attacks like <a href="https://en.wikipedia.org/wiki/Spectre_(security_vulnerability)">Spectre</a>, and for general defense-in-depth with <a href="https://github.com/bytecodealliance/rfcs/blob/main/accepted/cfi-improvements-with-pauth-and-bti.md">hardware CFI
+features</a> and other hardening.</p>
+<p>Cranelift is also, like browser JIT engines' compilers but unlike LLVM or
+gcc, specifically hardened against malicious compiler input: it is written to
+guard against pathological runtimes, for example by avoiding
+input-length-bounded recursion, and quadratic or higher algorithmic
+complexity wherever possible. It is not a linear-time single-pass compiler,
+but it is still suitable for compiling untrusted code (for example, Wasm
+modules). We fuzz while monitoring for out-of-memory and timeout conditions
+in compilation to verify this.</p>
+<p>Cranelift follows the <a href="https://bytecodealliance.org/security">Bytecode Alliance security policy</a>.
+We have had two sandbox-escape-capable miscompilation CVEs in Cranelift's
+7-year history. We welcome responsible disclosure of vulnerabilities and we
+follow best practices in disseminating notices and patches.</p>
+</li>
+<li>
+<p><strong>Relatively simple</strong>: Cranelift is an optimizing compiler, but it aims to
+take a fresh look at which optimizations are necessary. We have explicitly
+avoided features -- such as advanced alias analysis or use of undefined
+behavior -- that have historically led to subtle miscompilations in other
+compilers. Cranelift consists of about 200 thousand lines of code; in
+contrast, e.g. LLVM consists of over 20 million lines of code, a hundred
+times larger. This difference also allows Cranelift to be relatively
+approachable to developers, researchers, auditors and others who wish to
+understand how it works.</p>
+</li>
+<li>
+<p><strong>Innovative</strong>: In order to compete as a viable alternative to larger
+compilers, and in order to maximize correctness and security in particular,
+Cranelift is open to innovative approaches, and aims to be an actively
+welcoming home to research collaborations. We are (to our knoweldge) the
+first production compiler to use <a href="https://github.com/bytecodealliance/rfcs/pull/27">e-graphs</a> to build a unified optimization
+framework. We have developed new fuzzing techniques, such as a
+<a href="https://www.jacarte.me/assets/pdf/wasm_mutate.pdf">semantics-preserving fuzzing mutator</a> and a <a href="https://cfallin.org/blog/2021/03/15/cranelift-isel-3/">symbolic translation
+validator</a> for our register allocator. We
+developed a <a href="https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/isle/docs/language-reference.md">custom pattern-matching DSL</a> for optimization rewrite rules and
+instruction lowering rules in order to ensure correctness and allow
+high-level integration with verification tools. We strongly leverage fuzzing
+with custom oracles, such as differential comparison of execution results or
+validation of invariants (in practice more similar to <a href="https://en.wikipedia.org/wiki/Software_testing#Property_testing">property-based
+testing</a>) in order to efficiently find bugs and develop with high confidence.
+We actively collaborate with several academic groups to <a href="https://www.cs.cornell.edu/~avh/veri-isle-preprint.pdf">formally
+verify</a> parts of the compiler.</p>
+</li>
+</ul>
+</div>
+</section>
+<section>
+<div class="container w-container">
+<h2>Documentation</h2>
+<p>Cranelift has <a href="https://github.com/bytecodealliance/wasmtime/tree/main/cranelift/docs/">general documentation</a> describing aspects of its design,
+such as its <a href="https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/docs/ir.md">intermediate representation</a>, CLIF. Many of the <a href="https://docs.wasmtime.dev/">Wasmtime
+documents</a> are also applicable: Cranelift is developed in-tree
+in Wasmtime and generally follows its development, testing and release
+processes, for example. The <a href="https://bytecodealliance.github.io/wasmtime/contributing.html">contributing</a> documentation may be especially
+useful.</p>
+<p>For users of Cranelift, the [API] documentation for the main crate
+<a href="https://docs.rs/cranelift-codegen"><code>cranelift-codegen</code></a> and its auxiliary
+helpers for IR producers and Wasm-centric embedders,
+<a href="https://docs.rs/cranelift-frontend"><code>cranelift-frontend</code></a> and
+<a href="https://docs.rs/cranelift-wasm"><code>cranelift-wasm</code></a> respectively, may be useful
+to reference. Developers of Cranelift backends will find the above API
+references useful, as well as the <a href="https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/isle/docs/language-reference.md">ISLE DSL reference</a>.</p>
+<p>Finally, please do feel free to stop by our [Zulip chat instance] and ask
+questions -- we are happy to help!</p>
+</div>
+</section>
+
+      </article>
+    </div>
+  </body>
+</html>

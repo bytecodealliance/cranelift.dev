@@ -1,0 +1,6 @@
+site:
+  title: Cranelift
+  description: A fast, secure general-purpose optimizing compiler backend
+  base_url: https://cranelift.dev
+posts:
+  rss: rss.xml
